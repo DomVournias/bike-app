@@ -27,6 +27,7 @@
                         variant="text"
                         icon="mdi-trash-can-outline"
                         color="blue-lighten-2"
+                        @click="deleteBike(bike)"
                     />
                     <v-btn
                         variant="text"
@@ -46,7 +47,7 @@
 </template>
 
 <script>
-import { usePage } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import UpdateBikeForm from "./UpdateBikeForm.vue";
 
 export default {
@@ -65,6 +66,9 @@ export default {
         },
         closeEditBikeDialog() {
             this.isDialogVisible = false; // Close the dialog by changing isDialogVisible
+        },
+        deleteBike(bike) {
+            router.delete("/bikes/" + bike.id);
         },
     },
 };

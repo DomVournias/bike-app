@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/bikes/{bike}', [BikeController::class, 'update'])->name('bikes.update');
 
+    Route::delete('/bikes/{bike}', [BikeController::class, 'destroy']);
+
 
 
     

@@ -25,22 +25,12 @@ class BikeController extends Controller
             'bikes' => $bikes,
         ]);
 
-        // return Inertia::render('Dashboard', [
-        //     'bikes' => Bike::with('user')->get(),
-        // ]);
 
     }
 
     public function show(Bike $bike)
     {
       dd($bike->id);
-
-    //   return inertia('Bikes/UpdateBikeForm', [
-    //     'message'=> 'My message!',
-    //   ]);
-    // return Inertia::render('Dashboard', [
-    //     'bike' => $bike,
-    // ]);
     }
 
     public function store(BikeStoreRequest $request)
@@ -57,9 +47,6 @@ class BikeController extends Controller
         ]);
 
         
-
-        // return inertia('Dashboard');
-
         return Redirect::route('dashboard')->with('message', 'Bike added successfully!');
 
     }
@@ -72,7 +59,8 @@ class BikeController extends Controller
         $updateData = [];
     
         $fieldsToUpdate = ['bike_name', 'brand', 'model', 'year', 'serial_number'];
-    
+        
+        
         foreach ($fieldsToUpdate as $field) {
             if (isset($validatedData[$field]) && !empty($validatedData[$field])) {
                 $updateData[$field] = $validatedData[$field];
@@ -87,12 +75,10 @@ class BikeController extends Controller
 
     public function destroy(Bike $bike)
     {
-        // Delete a bike
-        // ...
+        $bike->delete();
+
+        return Redirect::route('dashboard')->with('message', 'Bike deleted.');
     }
 
-    public function mechanicname(Bike $name)
-    {
-        dd($name);
-    }
+   
 }
