@@ -69,13 +69,17 @@ class BikeController extends Controller
         
         $validatedData = $request->validated();
 
-        $bike->update([
-            'bike_name' => $validatedData['bike_name'],
-            'brand' => $validatedData['brand'],
-            'model' => $validatedData['model'],
-            'year' => $validatedData['year'],
-            'serial_number' => $validatedData['serial_number'],
-        ]);
+        $updateData = [];
+    
+        $fieldsToUpdate = ['bike_name', 'brand', 'model', 'year', 'serial_number'];
+    
+        foreach ($fieldsToUpdate as $field) {
+            if (isset($validatedData[$field]) && !empty($validatedData[$field])) {
+                $updateData[$field] = $validatedData[$field];
+            }
+        }
+    
+        $bike->update($updateData);
 
 
         return Redirect::route('dashboard')->with('message', 'Bike updated.');

@@ -16,11 +16,11 @@ class BikeUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'bike_name' => 'required|string|max:15',
-            'brand' => 'required|string|max:10',
-            'model' => 'required|string|max:15',
+            'bike_name' => 'nullable|string|max:15',
+            'brand' => 'nullable|string|max:10',
+            'model' => 'nullable|string|max:15',
             'year' => 'nullable|integer',
-            'serial_number' => 'required|string|max:20',
+            'serial_number' => 'nullable|string|max:20',
         ];
     }
 }
