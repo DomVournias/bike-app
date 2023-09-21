@@ -23,10 +23,10 @@ Route::get('/', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', [BikeController::class, 'index'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-
+    
+    Route::get('/dashboard', [BikeController::class, 'index'])->name('dashboard');
 
     // Bikes routes
     Route::apiResource('/bikes', BikeController::class);

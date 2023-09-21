@@ -6,12 +6,23 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
+import Notification from "@/Components/Notification.vue";
 
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
     <div>
+        <div
+            v-if="$page.props.flash.message"
+            class="absolute top-8 right-8 z-10"
+        >
+            <Notification
+                :message="$page.props.flash.message"
+                :flash="$page.props.flash"
+            />
+        </div>
+
         <div class="min-h-screen bg-gray-100">
             <div class="text-center"></div>
             <nav class="bg-white border-b border-gray-100">
@@ -70,11 +81,6 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink
-                                            :href="route('profile.edit')"
-                                        >
-                                            Profile
-                                        </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"

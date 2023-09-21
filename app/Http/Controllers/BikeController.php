@@ -6,6 +6,7 @@ use App\Http\Requests\BikeStoreRequest;
 use App\Http\Requests\BikeUpdateRequest;
 use App\Models\Bike;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Log; 
@@ -56,16 +57,16 @@ class BikeController extends Controller
         ]);
 
         
-        // session()->flash('success', 'Bike created successfully!');
 
         // return inertia('Dashboard');
+
+        return Redirect::route('dashboard')->with('message', 'Bike added successfully!');
 
     }
 
     public function update(BikeUpdateRequest $request, Bike $bike)
     {
-        $this->authorize('update', $bike);
-
+        
         $validatedData = $request->validated();
 
         $bike->update([
@@ -75,6 +76,9 @@ class BikeController extends Controller
             'year' => $validatedData['year'],
             'serial_number' => $validatedData['serial_number'],
         ]);
+
+
+        return Redirect::route('dashboard')->with('message', 'Bike updated.');
     }
 
     public function destroy(Bike $bike)
