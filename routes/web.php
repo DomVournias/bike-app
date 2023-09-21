@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/bikes/{bike}', [BikeController::class, 'destroy']);
 
+    Route::delete('/bikes', [BikeController::class, 'destroyBikes']);
+
 
 
     

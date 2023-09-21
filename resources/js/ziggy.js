@@ -22,24 +22,15 @@ const Ziggy = {
         dashboard: { uri: "dashboard", methods: ["GET", "HEAD"] },
         "bikes.index": { uri: "bikes", methods: ["GET", "HEAD"] },
         "bikes.store": { uri: "bikes", methods: ["POST"] },
-        "bikes.show": {
+        "bike.show": {
             uri: "bikes/{bike}",
             methods: ["GET", "HEAD"],
             bindings: { bike: "id" },
         },
         "bikes.update": {
             uri: "bikes/{bike}",
-            methods: ["PUT", "PATCH"],
+            methods: ["PATCH"],
             bindings: { bike: "id" },
-        },
-        "bikes.destroy": {
-            uri: "bikes/{bike}",
-            methods: ["DELETE"],
-            bindings: { bike: "id" },
-        },
-        "bikes.mechanicname": {
-            uri: "bikes/mechanic/{name}",
-            methods: ["GET", "HEAD"],
         },
         "service-requests.index": {
             uri: "service-requests",

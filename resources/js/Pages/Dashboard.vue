@@ -10,7 +10,7 @@
         <div class="max-w-7xl px-4 d-flex flex-col mx-auto py-8 gap-6">
             <div class="d-flex gap-6">
                 <div class="bg-white px-8 py-6 w-1/2 rounded-lg">
-                    <CreateBikeForm />
+                    <CreateBikeForm :errors="$page.props.errors" />
                 </div>
                 <div class="bg-white px-8 py-6 w-1/2 rounded-lg">
                     <CreateServiceRequest />
@@ -26,7 +26,7 @@
 <script>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import CreateBikeForm from "@/Components/Bikes/CreateBikeForm.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 import BikesTable from "@/Components/Bikes/BikesTable.vue";
 import CreateServiceRequest from "@/Components/Bikes/CreateServiceRequest.vue";
 

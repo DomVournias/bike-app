@@ -1,6 +1,11 @@
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
+import InputError from "@/Components/InputError.vue";
+
+const props = defineProps({
+    errors: Object,
+});
 
 const form = useForm({
     bike_name: "",
@@ -10,9 +15,9 @@ const form = useForm({
     serial_number: "",
 });
 
-const isFormEmpty = computed(() => {
-    return !form.bike_name || !form.brand || !form.model || !form.serial_number;
-});
+// const isFormEmpty = computed(() => {
+//     return !form.bike_name || !form.brand || !form.model || !form.serial_number;
+// });
 
 const submit = () => {
     form.post(route("bikes.store"));
@@ -31,7 +36,9 @@ const submit = () => {
             clearable
             required
             class="testing"
+            :error-messages="errors.bike_name"
         />
+
         <v-text-field
             v-model="form.brand"
             type="text"
@@ -40,7 +47,9 @@ const submit = () => {
             color="primary"
             clearable
             required
+            :error-messages="errors.brand"
         />
+
         <v-text-field
             v-model="form.model"
             type="text"
@@ -49,7 +58,9 @@ const submit = () => {
             color="primary"
             clearable
             required
+            :error-messages="errors.model"
         />
+
         <v-text-field
             v-model="form.year"
             type="text"
@@ -58,7 +69,9 @@ const submit = () => {
             color="primary"
             clearable
             required
+            :error-messages="errors.year"
         />
+
         <v-text-field
             v-model="form.serial_number"
             type="text"
@@ -67,15 +80,11 @@ const submit = () => {
             color="primary"
             clearable
             required
+            :error-messages="errors.serial_number"
         />
 
         <div class="flex items-center justify-end">
-            <v-btn
-                class=""
-                type="submit"
-                :disabled="isFormEmpty"
-                color="primary justify-end"
-            >
+            <v-btn class="" type="submit" color="primary justify-end">
                 Add bike
             </v-btn>
         </div>

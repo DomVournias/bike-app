@@ -80,5 +80,15 @@ class BikeController extends Controller
         return Redirect::route('dashboard')->with('message', 'Bike deleted.');
     }
 
+
+    public function destroyBikes()
+{
+    $user = auth()->user();
+
+    $user->bikes()->delete();
+
+    return Redirect::route('dashboard')->with('message', 'You have successfully deleted all your bikes.');
+}
+
    
 }

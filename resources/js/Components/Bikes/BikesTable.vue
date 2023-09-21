@@ -2,7 +2,7 @@
     {{ usePage().ziggy }}
     <div class="d-flex justify-between">
         <h3 class="font-semibold text-lg text-gray-700">My Bikes</h3>
-        <v-btn variant="flat">Delete all</v-btn>
+        <v-btn variant="flat" @click="destroyBikes">Delete all</v-btn>
     </div>
     <v-table>
         <thead>
@@ -12,17 +12,17 @@
                 <th class="text-left">Model</th>
                 <th class="text-left">Year</th>
                 <th class="text-left">Serial Number</th>
+                <th class="text-right">Manage</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody v-if="usePage().props.bikes.length > 0">
             <tr v-for="bike in usePage().props.bikes" :key="bike.id">
                 <td>{{ bike.bike_name }}</td>
                 <td>{{ bike.brand }}</td>
                 <td>{{ bike.model }}</td>
                 <td>{{ bike.year }}</td>
                 <td>{{ bike.serial_number }}</td>
-                <td>{{ bike.id }}</td>
-                <td>
+                <td class="flex justify-end">
                     <v-btn
                         variant="text"
                         icon="mdi-trash-can-outline"
@@ -38,7 +38,17 @@
                 </td>
             </tr>
         </tbody>
+        <tbody v-else>
+            <tr>
+                <td colspan="7" class="text-center">
+                    <h3 class="pt-6">
+                        You don't have any bikes in your list yet.
+                    </h3>
+                </td>
+            </tr>
+        </tbody>
     </v-table>
+
     <UpdateBikeForm
         v-model="isDialogVisible"
         :bike="currentBike"
@@ -69,6 +79,9 @@ export default {
         },
         deleteBike(bike) {
             router.delete("/bikes/" + bike.id);
+        },
+        destroyBikes() {
+            router.delete("/bikes");
         },
     },
 };
