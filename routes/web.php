@@ -1,18 +1,53 @@
 <?php
 
+use App\Http\Controllers\BikeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceRequestController;
+use App\Models\Bike;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('welcome', function () {
-    return view('welcome');
+
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [BikeController::class, 'index'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+
+
+    // Bikes routes
+    Route::apiResource('/bikes', BikeController::class);
+    // Route::get('/bikes/mechanic/{name}', [BikeController::class, 'mechanicname'])->name('bikes.mechanicname');
+    Route::get('/bikes/{bike}', [BikeController::class, 'show'])->name('bike.show');
+
+    Route::patch('/bikes/{bike}', [BikeController::class, 'update'])->name('bikes.update');
+
+
+
+    
+    // Service requests routes
+    Route::get('/service-requests', [ServiceRequestController::class, 'index'])->name('service-requests.index');
+    Route::get('/service-requests/create', [ServiceRequestController::class, 'create'])->name('service-requests.create');
+
+
+    // Profile routes
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+});
+
+require __DIR__.'/auth.php';
