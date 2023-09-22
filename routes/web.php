@@ -43,8 +43,8 @@ Route::middleware('auth')->group(function () {
 
     
     // Service requests routes
-    Route::get('/service-requests', [ServiceRequestController::class, 'index'])->name('service-requests.index');
-    Route::get('/service-requests/create', [ServiceRequestController::class, 'create'])->name('service-requests.create');
+    Route::get('/service-requests', [ServiceRequestController::class, 'index'])->name('service-requests');
+    Route::post('/service-request/store', [ServiceRequestController::class, 'store'])->name('service-request.store');
 
 
     // Profile routes

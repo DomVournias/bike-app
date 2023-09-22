@@ -36,9 +36,9 @@ const Ziggy = {
             uri: "service-requests",
             methods: ["GET", "HEAD"],
         },
-        "service-requests.create": {
-            uri: "service-requests/create",
-            methods: ["GET", "HEAD"],
+        "service-request.store": {
+            uri: "service-request/store",
+            methods: ["POST"],
         },
         "profile.edit": { uri: "profile", methods: ["GET", "HEAD"] },
         "profile.update": { uri: "profile", methods: ["PATCH"] },

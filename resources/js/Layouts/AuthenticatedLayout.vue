@@ -47,7 +47,19 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
                                 >
-                                    Dashboard
+                                    Bike Management
+                                </NavLink>
+                            </div>
+                            <div
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <NavLink
+                                    :href="route('service-requests')"
+                                    :active="
+                                        route().current('service-requests')
+                                    "
+                                >
+                                    Service Requests
                                 </NavLink>
                             </div>
                         </div>

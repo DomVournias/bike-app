@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function serviceRequests(): HasMany
     {
-        return $this->hasMany(ServiceRequest::class);
+        return $this->hasMany(ServiceRequest::class, 'user_id');
     }
 
 }

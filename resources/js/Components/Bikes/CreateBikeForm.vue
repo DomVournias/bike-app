@@ -1,7 +1,5 @@
 <script setup>
-import { useForm, usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
-import InputError from "@/Components/InputError.vue";
+import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
     errors: Object,
@@ -14,10 +12,6 @@ const form = useForm({
     year: "",
     serial_number: "",
 });
-
-// const isFormEmpty = computed(() => {
-//     return !form.bike_name || !form.brand || !form.model || !form.serial_number;
-// });
 
 const submit = () => {
     form.post(route("bikes.store"));

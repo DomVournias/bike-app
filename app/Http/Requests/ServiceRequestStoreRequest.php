@@ -16,8 +16,11 @@ class ServiceRequestStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string|max:255',
-            'worksheet' => 'required|json',
+            'bike_name' => 'required|string',
+            'task' => 'required|string|max:100',
+            'bike_id' => 'nullable|integer',
+            'done' => 'nullable',
+            'cost' => 'nullable|integer',
         ];
     }
 }
