@@ -2,17 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Bike;
 use App\Models\User;
+use App\Models\ServiceRequest;
 use Illuminate\Database\Seeder;
 
-class BikeSeeder extends Seeder
+class ServiceRequestSeeder extends Seeder
 {
-    
     public function run()
     {
-        User::each(function ($user) {
-            Bike::factory()->count(10)->create([
+        User::all()->each(function ($user) {
+            ServiceRequest::factory()->count(10)->create([
                 'user_id' => $user->id,
             ]);
         });

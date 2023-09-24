@@ -36,6 +36,10 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
+            <div class="opacity-50 pb-2">
+                <p class="text-sm">email: admin@admin.com</p>
+                <p class="text-sm">password: adminadmin</p>
+            </div>
             <div>
                 <v-text-field
                     v-model="form.email"
