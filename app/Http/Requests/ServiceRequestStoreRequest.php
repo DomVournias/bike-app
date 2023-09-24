@@ -19,7 +19,7 @@ class ServiceRequestStoreRequest extends FormRequest
             'bike_name' => 'required|string',
             'task' => 'required|string|max:100',
             'bike_id' => 'nullable|integer',
-            'done' => 'nullable',
+            'done' => 'nullable|string',
             'cost' => 'nullable|integer',
         ];
     }

@@ -70,7 +70,7 @@ const submit = () => {
                 <v-text-field
                     v-model="form.password_confirmation"
                     type="password"
-                    label="Email"
+                    label="Confirm Password"
                     variant="underlined"
                     color="primary"
                     required

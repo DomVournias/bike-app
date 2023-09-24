@@ -4,26 +4,17 @@
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Service Requests
+                Admin Panel
             </h2>
         </template>
         <div class="max-w-7xl px-4 d-flex flex-col mx-auto py-8 gap-6">
-            <div class="d-flex gap-6">
-                <div class="bg-white px-8 py-6 w-1/2 rounded-lg">
-                    <CreateServiceRequest
-                        :bikes="bikes"
-                        :errors="$page.props.errors"
-                    />
-                </div>
-            </div>
-
             <div class="bg-white px-8 py-6 rounded-lg">
                 <ServiceRequestsTable
-                    :isAdmin="false"
-                    :showView="true"
-                    :showEdit="false"
+                    :isAdmin="true"
+                    :showEdit="true"
                     :showCancel="true"
-                    :title="'My Service Requests'"
+                    :showView="true"
+                    :title="'All Service Requests'"
                 />
             </div>
         </div>

@@ -11,7 +11,7 @@ const form = useForm({
     bike_id: "",
     bike_name: "",
     bike: null,
-    done: false,
+    done: "Pending",
     cost: 0,
 });
 
@@ -40,6 +40,8 @@ const submit = () => {
             ></v-select>
             <v-textarea
                 v-model="form.task"
+                counter
+                :rules="rules"
                 label="Description"
                 variant="outlined"
                 auto-grow
@@ -48,13 +50,8 @@ const submit = () => {
                 :error-messages="errors.task"
             ></v-textarea>
         </v-form>
-        <div class="flex items-center justify-end">
-            <v-btn
-                class=""
-                type="submit"
-                @click="submit"
-                color="primary justify-end"
-            >
+        <div class="flex items-center justify-end pt-4">
+            <v-btn type="submit" @click="submit" color="primary justify-end">
                 Request
             </v-btn>
         </div>
@@ -63,6 +60,9 @@ const submit = () => {
 
 <script>
 export default {
+    data: () => ({
+        rules: [(v) => v.length <= 100 || "Max 100 characters"],
+    }),
     methods: {
         itemProps(item) {
             return {

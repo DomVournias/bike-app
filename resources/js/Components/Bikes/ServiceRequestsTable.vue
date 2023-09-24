@@ -1,17 +1,20 @@
 <template>
     {{ usePage().ziggy }}
     <div class="d-flex justify-between">
-        <h3 class="font-semibold text-lg text-gray-700">My Service Requests</h3>
-        <!-- <v-btn variant="flat" @click="destroyBikes">Delete all</v-btn> -->
+        <h3 class="font-semibold text-lg text-gray-700">
+            {{ title }}
+        </h3>
     </div>
     <v-table>
         <thead>
             <tr>
-                <th class="text-left">Bike</th>
-                <th class="text-left">Service</th>
+                <th v-if="isAdmin" class="text-left">Request</th>
+                <th v-if="isAdmin" class="text-left">Customer</th>
+                <th v-if="!isAdmin" class="text-left">Bike</th>
+                <th v-if="!isAdmin" class="text-left">Service</th>
                 <th class="text-left">Cost</th>
                 <th class="text-left">Status</th>
-                <th class="text-right">Manage</th>
+                <th v-if="showCancel || showEdit" class="text-right">Manage</th>
             </tr>
         </thead>
         <tbody v-if="usePage().props.service_requests.length > 0">
@@ -19,27 +22,61 @@
                 v-for="service in usePage().props.service_requests"
                 :key="service.id"
             >
-                <td>{{ service.bike_name }}</td>
-                <td>{{ service.task }}</td>
-                <td>
-                    {{ service.cost === 0 ? "Not estimated" : service.cost }}
+                <td v-if="isAdmin" class="opacity-80">#{{ service.id }}</td>
+                <td v-if="isAdmin" class="opacity-80">
+                    {{ service.user.email }}
                 </td>
-                <td>{{ service.done === 0 ? "Pending" : "Finished" }}</td>
+                <td v-if="!isAdmin">{{ service.bike_name }}</td>
+                <td v-if="!isAdmin" class="truncate">{{ service.task }}</td>
+                <td>
+                    {{
+                        service.cost === 0
+                            ? "Not estimated"
+                            : service.cost + "€"
+                    }}
+                </td>
+                <td
+                    :class="{
+                        'text-orange-400': service.done === 'Pending',
+                        'text-lime-600': service.done === 'Completed',
+                        'text-red-500': service.done === 'Cancelled',
+                    }"
+                >
+                    {{ service.done }}
+                </td>
 
-                <!-- <td class="flex justify-end">
+                <td class="flex justify-end">
                     <v-btn
+                        v-if="showCancel"
+                        :disabled="
+                            service.done === 'Cancelled' ||
+                            service.done === 'Completed'
+                        "
                         variant="text"
-                        icon="mdi-trash-can-outline"
+                        icon="mdi-cancel"
                         color="blue-lighten-2"
-                        @click="deleteBike(bike)"
+                        @click="updateRequestStatus(service, 'Cancelled')"
                     />
                     <v-btn
+                        v-if="showEdit"
+                        :disabled="
+                            service.done === 'Cancelled' ||
+                            service.done === 'Completed'
+                        "
                         variant="text"
-                        icon="mdi-pencil-outline"
+                        icon="mdi-currency-eur"
                         color="blue-lighten-2"
-                        @click="openEditBkeDialog(bike)"
+                        @click="openDialog(service, 'isUpdateDialogVisible')"
                     />
-                </td> -->
+
+                    <v-btn
+                        v-if="showView"
+                        variant="text"
+                        icon="mdi-eye-outline"
+                        color="blue-lighten-2"
+                        @click="openDialog(service, 'isViewDialogVisible')"
+                    />
+                </td>
             </tr>
         </tbody>
         <tbody v-else>
@@ -50,41 +87,69 @@
             </tr>
         </tbody>
     </v-table>
-
-    <!-- <UpdateBikeForm
-        v-model="isDialogVisible"
-        :bike="currentBike"
-        @close="closeEditBikeDialog"
-    /> -->
+    <UpdateServiceRequestForm
+        v-model="isUpdateDialogVisible"
+        :serviceRequest="currentServiceRequest"
+        @close="closeUpdateDialog"
+    />
+    <ViewServiceRequest
+        v-model="isViewDialogVisible"
+        :serviceRequest="currentServiceRequest"
+        @close="closeViewDialog"
+        :isAdmin="isAdmin"
+    />
 </template>
 
 <script>
 import { router, usePage } from "@inertiajs/vue3";
-import UpdateBikeForm from "./UpdateBikeForm.vue";
+import UpdateServiceRequestForm from "./UpdateServiceRequestForm.vue";
+import ViewServiceRequest from "./ViewServiceRequest.vue";
 
 export default {
-    components: { usePage, UpdateBikeForm },
+    props: {
+        isAdmin: Boolean,
+        showView: Boolean,
+        showEdit: Boolean,
+        showCancel: Boolean,
+        title: String,
+    },
+    components: { usePage, UpdateServiceRequestForm, ViewServiceRequest },
     data() {
         return {
-            isDialogVisible: false,
-            currentBike: null,
+            isUpdateDialogVisible: false,
+            isViewDialogVisible: false,
+            currentServiceRequest: null,
         };
     },
     methods: {
         usePage,
-        openEditBkeDialog(bike) {
-            this.isDialogVisible = true;
-            this.currentBike = bike;
+        updateRequestStatus(serviceRequest, status) {
+            this.$inertia.put(
+                route("service-requests.updateStatus", {
+                    serviceRequest: serviceRequest.id,
+                    status: status,
+                })
+            );
         },
-        closeEditBikeDialog() {
-            this.isDialogVisible = false; // Close the dialog by changing isDialogVisible
+        openDialog(serviceRequest, type) {
+            this[type] = true;
+            this.currentServiceRequest = serviceRequest;
         },
-        deleteBike(bike) {
-            router.delete("/bikes/" + bike.id);
+        closeUpdateDialog() {
+            this.isUpdateDialogVisible = false;
         },
-        destroyBikes() {
-            router.delete("/bikes");
+        closeViewDialog() {
+            this.isViewDialogVisible = false;
         },
     },
 };
 </script>
+
+<style scoped>
+.truncate {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>

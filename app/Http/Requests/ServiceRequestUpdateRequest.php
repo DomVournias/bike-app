@@ -16,8 +16,8 @@ class ServiceRequestUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string|max:255',
-            'worksheet' => 'required|json',
+            'cost' => 'nullable|integer',
+            'done' => 'nullable|string',
         ];
     }
 }

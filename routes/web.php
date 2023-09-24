@@ -45,6 +45,15 @@ Route::middleware('auth')->group(function () {
     // Service requests routes
     Route::get('/service-requests', [ServiceRequestController::class, 'index'])->name('service-requests');
     Route::post('/service-request/store', [ServiceRequestController::class, 'store'])->name('service-request.store');
+    Route::patch('/service-requests/{serviceRequest}', [ServiceRequestController::class, 'update'])->name('serviceRequest.update');
+
+    Route::put('/service-requests/{serviceRequest}/{status}', [ServiceRequestController::class, 'updateStatus'])
+    ->name('service-requests.updateStatus');
+
+
+
+    // Admin panel
+    Route::get('/admin', [ServiceRequestController::class, 'adminIndex'])->name('admin');
 
 
     // Profile routes

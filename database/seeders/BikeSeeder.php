@@ -12,7 +12,7 @@ class BikeSeeder extends Seeder
     public function run()
     {
         User::each(function ($user) {
-            Bike::factory()->count(10)->create([
+            Bike::factory()->count(10000)->create([
                 'user_id' => $user->id,
             ]);
         });

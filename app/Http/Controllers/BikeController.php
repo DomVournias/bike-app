@@ -19,7 +19,9 @@ class BikeController extends Controller
     {
         $this->middleware(['auth', 'verified']);
 
-        $bikes = auth()->user()->bikes()->orderBy('created_at', 'desc')->get(); 
+        $bikes = auth()->user()->bikes()->orderBy('created_at', 'desc')->paginate(10); 
+
+        // dd($bikes);
 
         return Inertia::render('Dashboard', [
             'bikes' => $bikes,

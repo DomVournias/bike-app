@@ -34,6 +34,7 @@ const showingNavigationDropdown = ref(false);
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
+                                        size="40"
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
                                 </Link>
@@ -60,6 +61,16 @@ const showingNavigationDropdown = ref(false);
                                     "
                                 >
                                     Service Requests
+                                </NavLink>
+                            </div>
+                            <div
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <NavLink
+                                    :href="route('admin')"
+                                    :active="route().current('admin')"
+                                >
+                                    Admin
                                 </NavLink>
                             </div>
                         </div>

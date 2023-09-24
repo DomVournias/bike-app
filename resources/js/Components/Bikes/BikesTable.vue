@@ -15,8 +15,8 @@
                 <th class="text-right">Manage</th>
             </tr>
         </thead>
-        <tbody v-if="usePage().props.bikes.length > 0">
-            <tr v-for="bike in usePage().props.bikes" :key="bike.id">
+        <tbody v-if="usePage().props.bikes.data.length > 0">
+            <tr v-for="bike in usePage().props.bikes.data" :key="bike.id">
                 <td>{{ bike.bike_name }}</td>
                 <td>{{ bike.brand }}</td>
                 <td>{{ bike.model }}</td>
@@ -48,7 +48,7 @@
             </tr>
         </tbody>
     </v-table>
-
+    <Pagination :items="usePage().props.bikes" />
     <UpdateBikeForm
         v-model="isDialogVisible"
         :bike="currentBike"
@@ -59,9 +59,10 @@
 <script>
 import { router, usePage } from "@inertiajs/vue3";
 import UpdateBikeForm from "./UpdateBikeForm.vue";
+import Pagination from "../Pagination.vue";
 
 export default {
-    components: { usePage, UpdateBikeForm },
+    components: { usePage, UpdateBikeForm, Pagination },
     data() {
         return {
             isDialogVisible: false,

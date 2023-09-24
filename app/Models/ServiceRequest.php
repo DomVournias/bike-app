@@ -15,6 +15,13 @@ class ServiceRequest extends Model
         'cost',
         'user_id'
 
+
+    ];
+
+    protected $casts = [
+        'done'=> 'string',
+        'created_at'=> 'date:m-Y'
+
     ];
 
      // Relations

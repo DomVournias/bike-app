@@ -12,12 +12,6 @@
                 <div class="bg-white px-8 py-6 w-1/2 rounded-lg">
                     <CreateBikeForm :errors="$page.props.errors" />
                 </div>
-                <div class="bg-white px-8 py-6 w-1/2 rounded-lg">
-                    <CreateServiceRequest
-                        :bikes="bikes"
-                        :errors="$page.props.errors"
-                    />
-                </div>
             </div>
 
             <div class="bg-white px-8 py-6 rounded-lg">
@@ -42,7 +36,7 @@ export default {
         CreateServiceRequest,
     },
     props: {
-        bikes: Array,
+        bikes: Object,
     },
 };
 </script>
