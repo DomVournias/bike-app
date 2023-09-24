@@ -17,7 +17,7 @@ class ServiceRequestController extends Controller
         $this->middleware(['auth', 'verified']);
 
         $bikes = auth()->user()->bikes()->orderBy('created_at', 'desc')->get(); 
-        $service_requests = auth()->user()->serviceRequests()->orderBy('created_at', 'desc')->get(); 
+        $service_requests = auth()->user()->serviceRequests()->orderBy('created_at', 'desc')->paginate(10);
 
         return Inertia::render('ServiceRequests', [
             'bikes' => $bikes,
@@ -33,7 +33,7 @@ class ServiceRequestController extends Controller
         $this->middleware(['auth', 'verified']);
 
         
-        $service_requests = ServiceRequest::with('user')->orderBy('created_at', 'desc')->get();
+        $service_requests = ServiceRequest::with('user')->orderBy('created_at', 'desc')->paginate(10); 
 
         return Inertia::render('Admin', [
             'service_requests' => $service_requests,

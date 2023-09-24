@@ -17,9 +17,9 @@
                 <th v-if="showCancel || showEdit" class="text-right">Manage</th>
             </tr>
         </thead>
-        <tbody v-if="usePage().props.service_requests.length > 0">
+        <tbody v-if="usePage().props.service_requests.data.length > 0">
             <tr
-                v-for="service in usePage().props.service_requests"
+                v-for="service in usePage().props.service_requests.data"
                 :key="service.id"
             >
                 <td v-if="isAdmin" class="opacity-80">#{{ service.id }}</td>
@@ -87,6 +87,7 @@
             </tr>
         </tbody>
     </v-table>
+    <Pagination :items="usePage().props.service_requests" />
     <UpdateServiceRequestForm
         v-model="isUpdateDialogVisible"
         :serviceRequest="currentServiceRequest"
@@ -104,6 +105,7 @@
 import { router, usePage } from "@inertiajs/vue3";
 import UpdateServiceRequestForm from "./UpdateServiceRequestForm.vue";
 import ViewServiceRequest from "./ViewServiceRequest.vue";
+import Pagination from "../Pagination.vue";
 
 export default {
     props: {
@@ -113,7 +115,12 @@ export default {
         showCancel: Boolean,
         title: String,
     },
-    components: { usePage, UpdateServiceRequestForm, ViewServiceRequest },
+    components: {
+        usePage,
+        UpdateServiceRequestForm,
+        ViewServiceRequest,
+        Pagination,
+    },
     data() {
         return {
             isUpdateDialogVisible: false,
